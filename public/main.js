@@ -13,7 +13,7 @@ const newAgeInput = document.querySelector('#age')
 const newLikesText = document.querySelector('textarea')
 const charContainer = document.querySelector('section')
 
-const baseURL = 'http://localhost:4000'
+const baseURL = 'https://apm-lab-lh.herokuapp.com'
 
 function createCharacterCard(char) {
   let charCard = document.createElement('div')

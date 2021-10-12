@@ -66,20 +66,20 @@ app.get('/characters', (req, res) => {
 //     res.status(200).send(characters[index])
 // })
 
-app.get('/character', (req, res) => {
-    const { age } = req.query
+// app.get('/character', (req, res) => {
+//     const { age } = req.query
 
-    if(age != ''){
-        let filtered = characters.filter(char => {
-        return char.age > age
-        })
-        rollbar.log('age limit valid')
-        res.status(200).send(filtered)
-    } else {
-        rollbar.error('no age entered')
-        res.status(400).send('please enter an age to search')
-    }
-})
+//     if(age != ''){
+//         let filtered = characters.filter(char => {
+//         return char.age > age
+//         })
+//         rollbar.log('age limit valid')
+//         res.status(200).send(filtered)
+//     } else {
+//         rollbar.error('no age entered')
+//         res.status(400).send('please enter an age to search')
+//     }
+// })
 
 // let id = 4
 
