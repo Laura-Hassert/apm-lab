@@ -1,5 +1,12 @@
 const express = require('express');
 const path = require('path');
+const Rollbar = require('rollbar');
+
+const rollbar = new Rollbar({
+    accessToken: 'eb672d5dc1164db78227f10322716d78',
+    captureUncaught: true,
+    captureUnhandledRejections: true
+});
 
 const app = express();
 
@@ -9,7 +16,7 @@ app.use('/style', express.static(path.join(__dirname, './public/styles.css')))
 
 app.get('/', (req,res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'))
-    // rollbar.info('html file served successfully')
+    rollbar.info('html file served successfully')
 });
 
 let characters = [
@@ -78,7 +85,7 @@ let characters = [
 //     id++
 // })
 
-// app.use(rollbar.errorHandler())
+app.use(rollbar.errorHandler())
 
 const port = process.env.PORT || 4000
 app.listen(port, () => console.log(`Server up on ${port}`));
