@@ -55,35 +55,53 @@ let characters = [
 ]
 
 // app.get('/characters', (req, res) => {
-//     console.log('hit chars')
+//     rollbar.error
 //     res.status(200).send(characters)
 // })
 
-// app.get('/character/:name', (req, res) => {
-//     const { name } = req.params
-//     const index = characters.findIndex(char => char.firstName.toLowerCase() === name)
-//     res.status(200).send(characters[index])
-// })
+app.get('/characters', (req, res) => {
+    console.log('hit chars')
+    res.status(200).send(characters)
+})
 
-// app.get('/character', (req, res) => {
-//     const { age } = req.query
+app.get('/character/:name', (req, res) => {
+    const { name } = req.params
+    const index = characters.findIndex(char => char.firstName.toLowerCase() === name)
+    res.status(200).send(characters[index])
+})
+
+app.get('/character', (req, res) => {
+    const { age } = req.query
     
-//     let filtered = characters.filter(char => {
-//         return char.age > age
-//     })
+    let filtered = characters.filter(char => {
+        return char.age > age
+    })
 
-//     res.status(200).send(filtered)
-// })
+    res.status(200).send(filtered)
+})
 
-// let id = 4
+let id = 4
 
-// app.post('/character', (req, res) => {
-//     let newChar = {...req.body, id}
-//     newChar.likes = newChar.likes.slice(0, 3)
-//     characters.unshift(newChar)
-//     res.status(200).send(characters)
-//     id++
-// })
+app.post('/character', (req, res) => {
+    let newChar = {...req.body, id}
+    newChar.likes = newChar.likes.slice(0, 3)
+    
+    const index = characters.findIndex(characterName => characterName = firstName)
+    
+    if(index === -1 && firstName != ''){
+        characters.unshift(newChar)
+        rollbar.log('New character added!', {author:'Laura', type:'manual entry'})
+        res.status(200).send(characters)
+        id++
+    } else if (req.body === ''){
+        rollbar.error('Not enoug character information')
+        res.status(400).send('Please complete all required fields')
+    } else {
+        rollbar.error('Character already exists')
+        res.status(400).send('This character already exists')
+    }
+
+})
 
 app.use(rollbar.errorHandler())
 
